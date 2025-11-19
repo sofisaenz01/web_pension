@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Cálculo de Pensión</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #F8EBBE;
+            color: #333;
+            padding: 40px;
+        }
+
+        h1 {
+            color: #924F1B;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 900px;
+            margin: auto;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .form-group {
+            flex: 1 1 45%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 6px;
+            color: #924F1B;
+            font-weight: 600;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            padding: 10px;
+            border: 2px solid #7BA58D;
+            border-radius: 8px;
+            background-color: #fdf9ec;
+        }
+
+        .radio-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 8px;
+        }
+
+        .fecha-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            background-color: #E2AC3F;
+            color: white;
+            border: none;
+            padding: 14px 25px;
+            font-size: 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 25px auto 0;
+            display: block;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #c9932f;
+        }
+
+        h3 {
+            color: #924F1B;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        p {
+            background-color: #fdf5d3;
+            padding: 15px;
+            border-left: 5px solid #E2AC3F;
+            max-width: 600px;
+            margin: 20px auto;
+            border-radius: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .form-group {
+                flex: 1 1 100%;
+            }
+
+            .fecha-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Formulario de Cálculo de Pensión</h1>
+    <form method="POST" action="/calcular">
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="nombre">Nombre *</label>
+                <input type="text" id="nombre" name="nombre" required>
+            </div>
+            <div class="form-group">
+                <label for="apellidos">Apellidos *</label>
+                <input type="text" id="apellidos" name="apellidos" required>
+            </div>
+            <div class="form-group">
+                <label>Género *</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="genero" value="Hombre" required> Hombre</label>
+                    <label><input type="radio" name="genero" value="Mujer"> Mujer</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Fecha de nacimiento *</label>
+                <div class="fecha-group">
+                    <select name="dia" required>
+                        <option value="">Día</option>
+                        {% for i in range(1, 32) %}
+                            <option value="{{ i }}">{{ i }}</option>
+                        {% endfor %}
+                    </select>
+                    <select name="mes" required>
+                        <option value="">Mes</option>
+                        {% for i in range(1, 13) %}
+                            <option value="{{ i }}">{{ i }}</option>
+                        {% endfor %}
+                    </select>
+                    <select name="anio" required>
+                        <option value="">Año</option>
+                        {% for i in range(1950, 2006) %}
+                            <option value="{{ i }}">{{ i }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="edad_inicio">Edad en que empezaste a hacer aportes *</label>
+                <input type="number" id="edad_inicio" name="edad_inicio" min="15" max="65" required>
+            </div>
+            <div class="form-group">
+                <label for="semanas_colpensiones">Semanas cotizadas a Colpensiones</label>
+                <input type="number" id="semanas_colpensiones" name="semanas_colpensiones" min="0">
+            </div>
+            <div class="form-group">
+                <label for="semanas_privados">Semanas cotizadas a fondos privados</label>
+                <input type="number" id="semanas_privados" name="semanas_privados" min="0">
+            </div>
+            <div class="form-group">
+                <label for="regimen">Régimen actual *</label>
+                <select id="regimen" name="regimen" required>
+                    <option value="">Seleccione</option>
+                    <option value="colpensiones">Colpensiones</option>
+                    <option value="privados">Fondos privados</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="salario">Salario actual *</label>
+                <input type="number" id="salario" name="salario" min="0" required>
+            </div>
+        </div>
+        <button type="submit">Calcular Pensión</button>
+    </form>
+
+    {% if resultado %}
+        <h3>Resultado Aproximado</h3>
+        <p>{{ resultado }}</p>
+    {% endif %}
+</body>
+</html>

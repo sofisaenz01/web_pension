@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcula Tu Pensión</title>
+    <style>
+        /* Fuentes modernas */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: #F8EBBE;
+            color: #333;
+        }
+
+        header {
+            background: linear-gradient(135deg, #E2AC3F, #924F1B);
+            padding: 40px 20px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+
+        .container {
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .info {
+            background-color: #7BA58D;
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 700px;
+            margin: 20px 0;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .info:hover {
+            transform: translateY(-5px);
+        }
+
+        .info h2 {
+            margin-top: 0;
+            font-size: 1.8em;
+            color: #F8EBBE;
+        }
+
+        .formulario {
+            background-color: white;
+            border: 3px solid #E2AC3F;
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 30px;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+
+        .formulario h2 {
+            margin-top: 0;
+            color: #924F1B;
+            font-size: 1.8em;
+        }
+
+        input[type="text"] {
+            padding: 12px;
+            width: 90%;
+            margin-top: 15px;
+            border: 2px solid #7BA58D;
+            border-radius: 10px;
+            font-size: 1em;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 14px 30px;
+            background-color: #E2AC3F;
+            color: white;
+            font-size: 1em;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #7BA58D;
+            transform: scale(1.05);
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .info, .formulario {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Calcula Tu Pensión</h1>
+    </header>
+
+    <div class="container">
+        <div class="info">
+            <h2>Régimen de Prima Media</h2>
+            <p>Administrado por <strong>Colpensiones</strong>, garantiza una pensión vitalicia según semanas cotizadas y salario promedio.</p>
+        </div>
+
+        <div class="info">
+            <h2>Régimen de Ahorro Individual</h2>
+            <p>Gestionado por <strong>fondos privados</strong>, donde tu pensión depende del capital acumulado y sus rendimientos.</p>
+        </div>
+
+        <div class="formulario">
+            <h2>Calcula tu Pensión</h2>
+            <p>Ingresa tu nombre para comenzar:</p>
+            <input type="text" placeholder="Tu Nombre" required>
+            <br>
+            <a href="/formulario"><button type="button">Iniciar Cálculo</button></a>
+        </div>
+    </div>
+</body>
+</html>
