@@ -4,55 +4,42 @@ app = Flask(__name__)
 
 @app.route('/')
 def principal():
-    return render_template('index.html')
+    return render_template('index.html')  
 
 @app.route('/formulario')
-def contacto():
+def formulario():
     return render_template('formulario.html')
 
-@app.route('/calcular', methods=['POST'])
-def calcular_pension():
-    # Obtener datos del formulario
+@app.route('/procesar', methods=['POST'])
+def procesar():
     nombre = request.form.get('nombre')
     apellidos = request.form.get('apellidos')
-    genero = request.form.get('genero')
-    dia = int(request.form.get('dia'))
-    mes = int(request.form.get('mes'))
-    anio = int(request.form.get('anio'))
-    edad_inicio = int(request.form.get('edad_inicio'))
-    semanas_colpensiones = int(request.form.get('semanas_colpensiones') or 0)
-    semanas_privados = int(request.form.get('semanas_privados') or 0)
-    regimen = request.form.get('regimen')
     salario = float(request.form.get('salario'))
+    fondo = request.form.get('fondo')
+    semanas = int(request.form.get('semanas'))
+    edad = int(request.form.get('edad'))
 
-    # Calcular edad actual (aproximada)
-    from datetime import datetime
-    hoy = datetime.now()
-    edad = hoy.year - anio - ((hoy.month, hoy.day) < (mes, dia))
+    # mejora proyecto ARL
+    arl = float(request.form.get('arl'))
+    aporte_arl = salario * arl
 
-    # Total de semanas cotizadas
-    semanas_totales = semanas_colpensiones + semanas_privados
-
-    # Lógica de cálculo aproximado
-    if regimen == 'colpensiones':
-        if edad >= 62 and semanas_totales >= 1300:  # 62 años para hombres, 57 para mujeres
-            porcentaje = min(1.0, (semanas_totales // 50) * 0.012)  # Máximo 100%
-            pension = salario * porcentaje
-            resultado = f"Estimado/a {nombre} {apellidos}, tu pensión aproximada con Colpensiones es: ${pension:,.0f}."
-        else:
-            resultado = "No cumples con la edad mínima (62 años) o 1,300 semanas cotizadas para Colpensiones."
-    elif regimen == 'privados':
-        # Aproximación: saldo acumulado = aportes + rendimientos simples
-        anos_cotizados = edad - edad_inicio
-        aportes_totales = salario * 0.12 * anos_cotizados  # 12% de aporte aproximado
-        rendimientos = aportes_totales * 0.03 * anos_cotizados  # 3% anual aproximado
-        saldo = aportes_totales + rendimientos
-        pension = saldo / (20 * 12)  # Dividir entre 20 años en meses
-        resultado = f"Estimado/a {nombre} {apellidos}, tu pensión aproximada con fondos privados es: ${pension:,.0f}."
+    
+    if fondo == "colpensiones":
+        pension = salario * 0.65
+        resultado = (
+            f"Estimado/a {nombre} {apellidos}, tu pensión aproximada con Colpensiones es: "
+            f"${pension:,.0f}. Aporte mensual ARL: ${aporte_arl:,.0f}."
+        )
     else:
-        resultado = "Por favor, selecciona un régimen válido."
+        base = semanas * 10
+        rendimiento = salario * 0.10
+        pension = base + rendimiento
+        resultado = (
+            f"Estimado/a {nombre} {apellidos}, tu pensión aproximada con fondos privados es: "
+            f"${pension:,.0f}. Aporte mensual ARL: ${aporte_arl:,.0f}."
+        )
 
-    return render_template('formulario.html', resultado=resultado)
+    return render_template("formulario.html", resultado=resultado)
 
 if __name__ == '__main__':
     app.run(debug=True)

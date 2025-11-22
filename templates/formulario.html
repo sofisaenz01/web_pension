@@ -4,15 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario de Cálculo de Pensión</title>
+
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             background-color: #F8EBBE;
             color: #333;
             padding: 40px;
         }
 
-        h1 {
+        h1, h2 {
             color: #924F1B;
             text-align: center;
             margin-bottom: 30px;
@@ -54,18 +55,6 @@
             background-color: #fdf9ec;
         }
 
-        .radio-group {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-top: 8px;
-        }
-
-        .fecha-group {
-            display: flex;
-            gap: 10px;
-        }
-
         button {
             background-color: #E2AC3F;
             color: white;
@@ -83,105 +72,89 @@
             background-color: #c9932f;
         }
 
-        h3 {
-            color: #924F1B;
-            text-align: center;
-            margin-top: 40px;
-        }
-
-        p {
+        .resultado {
             background-color: #fdf5d3;
-            padding: 15px;
+            padding: 20px;
             border-left: 5px solid #E2AC3F;
             max-width: 600px;
-            margin: 20px auto;
-            border-radius: 5px;
+            margin: 30px auto;
+            border-radius: 8px;
+            font-size: 18px;
+            color: #333;
         }
 
         @media (max-width: 768px) {
             .form-group {
                 flex: 1 1 100%;
             }
-
-            .fecha-group {
-                flex-direction: column;
-            }
         }
     </style>
 </head>
 <body>
+
     <h1>Formulario de Cálculo de Pensión</h1>
-    <form method="POST" action="/calcular">
+
+    <form method="POST" action="/procesar">
         <div class="form-grid">
+
             <div class="form-group">
                 <label for="nombre">Nombre *</label>
                 <input type="text" id="nombre" name="nombre" required>
             </div>
+
             <div class="form-group">
                 <label for="apellidos">Apellidos *</label>
                 <input type="text" id="apellidos" name="apellidos" required>
             </div>
+
             <div class="form-group">
-                <label>Género *</label>
-                <div class="radio-group">
-                    <label><input type="radio" name="genero" value="Hombre" required> Hombre</label>
-                    <label><input type="radio" name="genero" value="Mujer"> Mujer</label>
-                </div>
+                <label for="edad">Edad *</label>
+                <input type="number" id="edad" name="edad" required>
             </div>
+
             <div class="form-group">
-                <label>Fecha de nacimiento *</label>
-                <div class="fecha-group">
-                    <select name="dia" required>
-                        <option value="">Día</option>
-                        {% for i in range(1, 32) %}
-                            <option value="{{ i }}">{{ i }}</option>
-                        {% endfor %}
-                    </select>
-                    <select name="mes" required>
-                        <option value="">Mes</option>
-                        {% for i in range(1, 13) %}
-                            <option value="{{ i }}">{{ i }}</option>
-                        {% endfor %}
-                    </select>
-                    <select name="anio" required>
-                        <option value="">Año</option>
-                        {% for i in range(1950, 2006) %}
-                            <option value="{{ i }}">{{ i }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
+                <label for="salario">Salario *</label>
+                <input type="number" id="salario" name="salario" required>
             </div>
+
             <div class="form-group">
-                <label for="edad_inicio">Edad en que empezaste a hacer aportes *</label>
-                <input type="number" id="edad_inicio" name="edad_inicio" min="15" max="65" required>
+                <label for="semanas">Semanas cotizadas *</label>
+                <input type="number" id="semanas" name="semanas" required>
             </div>
+
             <div class="form-group">
-                <label for="semanas_colpensiones">Semanas cotizadas a Colpensiones</label>
-                <input type="number" id="semanas_colpensiones" name="semanas_colpensiones" min="0">
-            </div>
-            <div class="form-group">
-                <label for="semanas_privados">Semanas cotizadas a fondos privados</label>
-                <input type="number" id="semanas_privados" name="semanas_privados" min="0">
-            </div>
-            <div class="form-group">
-                <label for="regimen">Régimen actual *</label>
-                <select id="regimen" name="regimen" required>
+                <label for="fondo">Fondo *</label>
+                <select id="fondo" name="fondo" required>
                     <option value="">Seleccione</option>
                     <option value="colpensiones">Colpensiones</option>
-                    <option value="privados">Fondos privados</option>
+                    <option value="privado">Fondo privado</option>
                 </select>
             </div>
+
+            <!-- CAMPO NUEVO: ARL -->
             <div class="form-group">
-                <label for="salario">Salario actual *</label>
-                <input type="number" id="salario" name="salario" min="0" required>
+                <label for="arl">Nivel de ARL *</label>
+                <select id="arl" name="arl" required>
+                    <option value="">Seleccione</option>
+                    <option value="0.00522">Nivel I (0.522%)</option>
+                    <option value="0.01044">Nivel II (1.044%)</option>
+                    <option value="0.02436">Nivel III (2.436%)</option>
+                    <option value="0.04350">Nivel IV (4.350%)</option>
+                    <option value="0.06960">Nivel V (6.960%)</option>
+                </select>
             </div>
+
         </div>
+
         <button type="submit">Calcular Pensión</button>
     </form>
 
     {% if resultado %}
-        <h3>Resultado Aproximado</h3>
+    <div class="resultado">
+        <h3>Resultado del cálculo</h3>
         <p>{{ resultado }}</p>
+    </div>
     {% endif %}
+
 </body>
 </html>

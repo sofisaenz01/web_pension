@@ -56,41 +56,32 @@
             color: #F8EBBE;
         }
 
-        .formulario {
+        .cta {
             background-color: white;
             border: 3px solid #E2AC3F;
             border-radius: 20px;
-            padding: 30px;
-            margin-top: 30px;
+            padding: 40px;
+            margin-top: 40px;
             max-width: 500px;
             text-align: center;
             box-shadow: 0 6px 15px rgba(0,0,0,0.1);
         }
 
-        .formulario h2 {
+        .cta h2 {
             margin-top: 0;
             color: #924F1B;
-            font-size: 1.8em;
-        }
-
-        input[type="text"] {
-            padding: 12px;
-            width: 90%;
-            margin-top: 15px;
-            border: 2px solid #7BA58D;
-            border-radius: 10px;
-            font-size: 1em;
+            font-size: 2em;
         }
 
         button {
-            margin-top: 20px;
-            padding: 14px 30px;
+            margin-top: 25px;
+            padding: 16px 40px;
             background-color: #E2AC3F;
             color: white;
-            font-size: 1em;
+            font-size: 1.2em;
             font-weight: bold;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s ease;
         }
@@ -100,13 +91,12 @@
             transform: scale(1.05);
         }
 
-        a {
-            text-decoration: none;
-        }
-
         @media (max-width: 768px) {
-            .info, .formulario {
+            .info, .cta {
                 width: 90%;
+            }
+            header h1 {
+                font-size: 2em;
             }
         }
     </style>
@@ -127,12 +117,13 @@
             <p>Gestionado por <strong>fondos privados</strong>, donde tu pensión depende del capital acumulado y sus rendimientos.</p>
         </div>
 
-        <div class="formulario">
+        <!-- Botón grande que lleva al formulario real -->
+        <div class="cta">
             <h2>Calcula tu Pensión</h2>
-            <p>Ingresa tu nombre para comenzar:</p>
-            <input type="text" placeholder="Tu Nombre" required>
-            <br>
-            <a href="/formulario"><button type="button">Iniciar Cálculo</button></a>
+            <p>Descubre cuánto recibirás al jubilarte según el régimen que elijas.</p>
+            <button type="button" onclick="window.location.href='formulario'">
+                Iniciar Cálculo
+            </button>
         </div>
     </div>
 </body>
