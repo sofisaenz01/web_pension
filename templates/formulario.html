@@ -3,158 +3,310 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario de Cálculo de Pensión</title>
+    <title>Calculadora de Pensión | Colombia 2025</title>
+    <meta name="description" content="Calcula tu pensión en Colpensiones o fondos privados con Retiro Programado real.">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
+        :root {
+            --primary: #1E40AF;
+            --primary-light: #3B82F6;
+            --accent: #F59E0B;
+            --success: #10B981;
+            --dark: #1F2937;
+            --gray: #6B7280;
+            --border: #E5E7EB;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #F8EBBE;
-            color: #333;
-            padding: 40px;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%);
+            color: var(--dark);
+            line-height: 1.6;
         }
 
-        h1, h2 {
-            color: #924F1B;
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
             text-align: center;
-            margin-bottom: 30px;
+            padding: 80px 20px;
+            position: relative;
+            overflow: hidden;
         }
 
-        form {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 15px;
-            max-width: 900px;
-            margin: auto;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 100px;
+            background: linear-gradient(to top, white 0%, transparent 100%);
+        }
+
+        header h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.95;
+        }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 60px 20px; }
+
+        .form-card {
+            background: white;
+            border-radius: 24px;
+            padding: 50px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
         }
 
         .form-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 28px;
+            margin-bottom: 40px;
         }
 
-        .form-group {
-            flex: 1 1 45%;
-            display: flex;
-            flex-direction: column;
-        }
+        .form-group { display: flex; flex-direction: column; }
 
         label {
-            margin-bottom: 6px;
-            color: #924F1B;
             font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 10px;
+            font-size: 1.05rem;
         }
 
-        input[type="text"],
-        input[type="number"],
-        select {
-            padding: 10px;
-            border: 2px solid #7BA58D;
-            border-radius: 8px;
-            background-color: #fdf9ec;
+        input, select {
+            padding: 16px 18px;
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            font-size: 1.1rem;
+            background-color: #FAFDFF;
+            transition: all 0.3s;
         }
 
-        button {
-            background-color: #E2AC3F;
-            color: white;
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 5px rgba(59, 130, 246, 0.15);
+        }
+
+        .btn {
+            padding: 18px 50px;
             border: none;
-            padding: 14px 25px;
-            font-size: 16px;
-            border-radius: 10px;
+            border-radius: 16px;
+            font-size: 1.2rem;
+            font-weight: 700;
             cursor: pointer;
-            margin: 25px auto 0;
-            display: block;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
         }
 
-        button:hover {
-            background-color: #c9932f;
-        }
+        .btn-primary { background: var(--accent); color: white; }
+        .btn-primary:hover { background: #D97706; transform: translateY(-4px); box-shadow: 0 15px 30px rgba(245, 158, 11, 0.4); }
+        .btn-secondary { background: #6B7280; color: white; margin-top: 20px; }
+        .btn-secondary:hover { background: #4B5563; transform: translateY(-3px); }
 
         .resultado {
-            background-color: #fdf5d3;
-            padding: 20px;
-            border-left: 5px solid #E2AC3F;
-            max-width: 600px;
-            margin: 30px auto;
-            border-radius: 8px;
-            font-size: 18px;
-            color: #333;
+            background: linear-gradient(135deg, #ECFDF5, #F0FDF4);
+            border: 3px solid #86EFAC;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .resultado h3 {
+            color: var(--success);
+            font-size: 2rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .resultado p {
+            font-size: 1.5rem;
+            line-height: 1.8;
+            color: var(--dark);
+            margin: 25px 0;
+        }
+
+        .retiro-box {
+            background: white;
+            border-radius: 18px;
+            padding: 35px;
+            margin-top: 30px;
+            border-left: 8px solid var(--accent);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        .retiro-box h4 { color: var(--accent); font-size: 1.6rem; margin-bottom: 16px; }
+
+        #retiroResult {
+            margin-top: 25px;
+            padding: 25px;
+            background: #FFFBEB;
+            border: 2px solid #F59E0B;
+            border-radius: 16px;
+            font-size: 1.4rem;
+            display: none;
+        }
+
+        footer {
+            text-align: center;
+            padding: 50px 20px;
+            background: var(--dark);
+            color: #9CA3AF;
+            font-size: 0.95rem;
+            margin-top: 80px;
         }
 
         @media (max-width: 768px) {
-            .form-group {
-                flex: 1 1 100%;
-            }
+            header h1 { font-size: 2.5rem; }
+            .form-card { padding: 30px; }
+            .form-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-    <h1>Formulario de Cálculo de Pensión</h1>
+    <header>
+        <h1>Calculadora de Pensión</h1>
+        <p>Ingresa tus datos y descubre cuánto recibirás al jubilarte</p>
+    </header>
 
-    <form method="POST" action="/procesar">
-        <div class="form-grid">
+    <div class="container">
+        <div class="form-card">
+            <form method="POST" action="/procesar">
+                <div class="form-grid">
+                    <div class="form-group"><label>Nombre completo</label><input type="text" name="nombre" required placeholder="Juan David"></div>
+                    <div class="form-group"><label>Apellidos</label><input type="text" name="apellidos" required placeholder="García López"></div>
+                    <div class="form-group"><label>Edad actual</label><input type="number" name="edad" required min="18" max="100" placeholder="45"></div>
+                    <div class="form-group"><label>Salario mensual (COP)</label><input type="number" name="salario" required min="1300000" placeholder="3500000"></div>
+                    <div class="form-group"><label>Semanas cotizadas</label><input type="number" name="semanas" required min="0" placeholder="1200"></div>
+                    <div class="form-group"><label>Régimen de pensión</label>
+                        <select name="fondo" required>
+                            <option value="">Seleccione régimen</option>
+                            <option value="colpensiones">Colpensiones (Prima Media)</option>
+                            <option value="privado">Fondo privado (Ahorro Individual)</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label>Clase de riesgo laboral (ARL)</label>
+                        <select name="arl" required>
+                            <option value="">Seleccione nivel</option>
+                            <option value="0.00522">Nivel I - Bajo (0.522%)</option>
+                            <option value="0.01044">Nivel II (1.044%)</option>
+                            <option value="0.02436">Nivel III (2.436%)</option>
+                            <option value="0.04350">Nivel IV (4.350%)</option>
+                            <option value="0.06960">Nivel V - Alto (6.960%)</option>
+                        </select>
+                    </div>
+                </div>
 
-            <div class="form-group">
-                <label for="nombre">Nombre *</label>
-                <input type="text" id="nombre" name="nombre" required>
-            </div>
+                <div style="text-align: center;">
+                    <button type="submit" class="btn btn-primary">Calcular Mi Pensión</button>
+                </div>
+            </form>
 
-            <div class="form-group">
-                <label for="apellidos">Apellidos *</label>
-                <input type="text" id="apellidos" name="apellidos" required>
-            </div>
+            {% if resultado is not none %}
+                <div class="resultado">
+                    <h3><i class="fas fa-check-circle"></i> Resultado del Cálculo</h3>
+                    <p><strong>{{ resultado }}</strong></p>
 
-            <div class="form-group">
-                <label for="edad">Edad *</label>
-                <input type="number" id="edad" name="edad" required>
-            </div>
+                    <div class="retiro-box">
+                        <h4>Simular duración real de tu pensión</h4>
+                        <p style="color:#555; margin:20px 0; font-size:1rem;">
+                            {% if fondo == "privado" %}
+                                Tu capital acumulado se divide entre los años que vivirás después de jubilarte (basado en DANE 2025).
+                            {% else %}
+                                Tu mesada de Colpensiones vs. costo de vida real: ¿cuánto tiempo te alcanza? (Canasta básica vejez: $1.200.000/mes, DANE 2025).
+                            {% endif %}
+                        </p>
+                        <button onclick="calcularRetiroProgramado('{{ fondo }}', '{{ resultado }}')" class="btn btn-primary" style="background:var(--accent);">
+                            Simular duración real
+                        </button>
 
-            <div class="form-group">
-                <label for="salario">Salario *</label>
-                <input type="number" id="salario" name="salario" required>
-            </div>
+                        <div id="retiroResult">
+                            <p id="mesadaText" style="font-weight:600; color:#924F1B; font-size:1.5rem;"></p>
+                            <small style="color:#666;">Datos DANE/Emporia 2025 • Estimación realista</small>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="form-group">
-                <label for="semanas">Semanas cotizadas *</label>
-                <input type="number" id="semanas" name="semanas" required>
-            </div>
-
-            <div class="form-group">
-                <label for="fondo">Fondo *</label>
-                <select id="fondo" name="fondo" required>
-                    <option value="">Seleccione</option>
-                    <option value="colpensiones">Colpensiones</option>
-                    <option value="privado">Fondo privado</option>
-                </select>
-            </div>
-
-            <!-- CAMPO NUEVO: ARL -->
-            <div class="form-group">
-                <label for="arl">Nivel de ARL *</label>
-                <select id="arl" name="arl" required>
-                    <option value="">Seleccione</option>
-                    <option value="0.00522">Nivel I (0.522%)</option>
-                    <option value="0.01044">Nivel II (1.044%)</option>
-                    <option value="0.02436">Nivel III (2.436%)</option>
-                    <option value="0.04350">Nivel IV (4.350%)</option>
-                    <option value="0.06960">Nivel V (6.960%)</option>
-                </select>
-            </div>
-
+                <div style="text-align: center;">
+                    <button onclick="window.location.href='/'" class="btn btn-secondary">Volver al Inicio</button>
+                </div>
+            {% endif %}
         </div>
-
-        <button type="submit">Calcular Pensión</button>
-    </form>
-
-    {% if resultado %}
-    <div class="resultado">
-        <h3>Resultado del cálculo</h3>
-        <p>{{ resultado }}</p>
     </div>
-    {% endif %}
 
+    <footer>
+        <p>© 2025 Calculadora de Pensión Colombia • Herramienta educativa • Resultados estimativos</p>
+    </footer>
+
+    <script>
+        function calcularRetiroProgramado(regimen, resultadoTexto) {
+            const salario = parseFloat(document.querySelector('input[name="salario"]').value) || 0;
+            const semanas = parseInt(document.querySelector('input[name="semanas"]').value) || 0;
+            const edad = parseInt(document.querySelector('input[name="edad"]').value) || 60;
+
+            let mensaje = "";
+            const canastaBasicaVejez = 1200000; // DANE ajustado 2025 para adultos mayores
+            const expectativaTotal = 77.6; // DANE 2025 Colombia
+            const edadRetiro = 65;
+            const añosRestantes = Math.max(expectativaTotal - edad, 0);
+            const mesesRestantes = añosRestantes * 12;
+
+            // Extraer pensión de resultadoTexto (ej: "$2,275,000")
+            let pensionMensual = 0;
+            if (regimen !== "privado") {
+                const match = resultadoTexto.match(/\$([\d,]+)/);
+                if (match) {
+                    pensionMensual = parseInt(match[1].replace(/,/g, ''));
+                } else {
+                    pensionMensual = salario * 0.65; // Fallback
+                }
+            }
+
+            if (regimen === "privado") {
+                const capital = (semanas * 10) + (salario * 0.10);
+                const añosPension = Math.max((expectativaTotal - edadRetiro), 12); // Mínimo 12 años
+                const mesada = Math.round(capital / (añosPension * 12));
+
+                mensaje = `Con retiro programado recibirías <strong>$${mesada.toLocaleString('es-CO')}</strong> mensuales durante <strong>${añosPension} años</strong> (hasta los ${Math.round(expectativaTotal)} años aprox., DANE 2025).`;
+            } else {
+                // Para Colpensiones: cuánto dura vs. canasta básica
+                if (pensionMensual > 0) {
+                    const excedenteMensual = pensionMensual - canastaBasicaVejez;
+                    const mesesTotales = excedenteMensual > 0 ? (excedenteMensual * mesesRestantes / canastaBasicaVejez) : 0;
+                    const años = Math.floor(mesesTotales / 12);
+                    const meses = Math.floor(mesesTotales % 12);
+
+                    if (excedenteMensual >= 0) {
+                        mensaje = `Tu pensión de <strong>$${pensionMensual.toLocaleString('es-CO')}</strong> mensuales cubre la canasta básica vejez ($1.200.000) y te sobraría para vivir <strong>${años} años y ${meses} meses</strong> cómodamente (desde los 65 años).`;
+                    } else {
+                        mensaje = `Tu pensión de <strong>$${pensionMensual.toLocaleString('es-CO')}</strong> mensuales no alcanza la canasta básica vejez ($1.200.000). Necesitarías complementar con ahorros o subsidios.`;
+                    }
+                } else {
+                    mensaje = "No se pudo extraer el valor de la pensión. Verifica los datos.";
+                }
+            }
+
+            document.getElementById('mesadaText').innerHTML = mensaje;
+            document.getElementById('retiroResult').style.display = 'block';
+        }
+    </script>
 </body>
 </html>
