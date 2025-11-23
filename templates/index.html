@@ -3,128 +3,274 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calcula Tu Pensión</title>
+    <title>Calcula Tu Pensión | Colombia 2025</title>
+    <meta name="description" content="Descubre cuánto será tu pensión en Colpensiones o fondos privados. Incluye cálculo de Retiro Programado real y aporte ARL.">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
     <style>
-        /* Fuentes modernas */
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+        :root {
+            --primary: #1E40AF;
+            --primary-light: #3B82F6;
+            --accent: #F59E0B;
+            --success: #10B981;
+            --dark: #1F2937;
+            --light: #F9FAFB;
+            --gray: #6B7280;
+            --border: #E5E7EB;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            margin: 0;
-            font-family: 'Poppins', sans-serif;
-            background-color: #F8EBBE;
-            color: #333;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%);
+            color: var(--dark);
+            line-height: 1.6;
         }
 
         header {
-            background: linear-gradient(135deg, #E2AC3F, #924F1B);
-            padding: 40px 20px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
             color: white;
             text-align: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            padding: 80px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 100px;
+            background: linear-gradient(to top, white 0%, transparent 100%);
         }
 
         header h1 {
-            margin: 0;
-            font-size: 2.5em;
+            font-size: 3.2rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.95;
         }
 
         .container {
-            padding: 40px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 60px 20px;
         }
 
-        .info {
-            background-color: #7BA58D;
-            color: white;
-            padding: 30px;
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .card {
+            background: white;
+            padding: 40px 30px;
             border-radius: 20px;
-            max-width: 700px;
-            margin: 20px 0;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease;
-        }
-
-        .info:hover {
-            transform: translateY(-5px);
-        }
-
-        .info h2 {
-            margin-top: 0;
-            font-size: 1.8em;
-            color: #F8EBBE;
-        }
-
-        .cta {
-            background-color: white;
-            border: 3px solid #E2AC3F;
-            border-radius: 20px;
-            padding: 40px;
-            margin-top: 40px;
-            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
             text-align: center;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            border: 1px solid var(--border);
         }
 
-        .cta h2 {
-            margin-top: 0;
-            color: #924F1B;
-            font-size: 2em;
+        .card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
         }
 
-        button {
-            margin-top: 25px;
-            padding: 16px 40px;
-            background-color: #E2AC3F;
+        .card i {
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+            color: var(--dark);
+        }
+
+        .card p {
+            color: var(--gray);
+            font-size: 1.05rem;
+        }
+
+        .regimenes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            margin: 80px 0;
+        }
+
+        .regimen {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .regimen:hover {
+            transform: translateY(-8px);
+        }
+
+        .regimen-header {
+            padding: 30px;
             color: white;
-            font-size: 1.2em;
-            font-weight: bold;
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
+            text-align: center;
         }
 
-        button:hover {
-            background-color: #7BA58D;
-            transform: scale(1.05);
+        .colpensiones { background: linear-gradient(135deg, #1E40AF, #1E3A8A); }
+        .privado { background: linear-gradient(135deg, #7C2D12, #9A3412); }
+
+        .regimen-body {
+            padding: 30px;
+            background: white;
+        }
+
+        .regimen h3 {
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+        }
+
+        .cta-section {
+            text-align: center;
+            padding: 80px 20px;
+            background: white;
+            border-radius: 24px;
+            margin: 60px 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+
+        .btn-cta {
+            background: var(--accent);
+            color: white;
+            padding: 18px 50px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 25px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-cta:hover {
+            background: #D97706;
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px rgba(245, 158, 11, 0.4);
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: var(--dark);
+            color: #9CA3AF;
+            font-size: 0.95rem;
         }
 
         @media (max-width: 768px) {
-            .info, .cta {
-                width: 90%;
-            }
-            header h1 {
-                font-size: 2em;
-            }
+            header h1 { font-size: 2.5rem; }
+            header p { font-size: 1.1rem; }
+            .cta-section h2 { font-size: 2rem; }
+            .btn-cta { padding: 16px 40px; font-size: 1.2rem; }
         }
     </style>
 </head>
 <body>
+
     <header>
         <h1>Calcula Tu Pensión</h1>
+        <p>Descubre en segundos cuánto recibirás al jubilarte: Colpensiones, fondos privados y Retiro Programado real</p>
     </header>
 
     <div class="container">
-        <div class="info">
-            <h2>Régimen de Prima Media</h2>
-            <p>Administrado por <strong>Colpensiones</strong>, garantiza una pensión vitalicia según semanas cotizadas y salario promedio.</p>
+
+        <!-- Características principales -->
+        <div class="features">
+            <div class="card">
+                <i class="fas fa-calculator"></i>
+                <h3>Cálculo Instantáneo</h3>
+                <p>Solo ingresa tu salario, semanas cotizadas y régimen. Resultado al instante.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Incluye ARL</h3>
+                <p>Te mostramos el aporte mensual exacto según tu nivel de riesgo laboral.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-chart-line"></i>
+                <h3>Retiro Programado Real</h3>
+                <p>Exclusivo: cálculo realista de cuánto te darían mensualmente en fondo privado.</p>
+            </div>
         </div>
 
-        <div class="info">
-            <h2>Régimen de Ahorro Individual</h2>
-            <p>Gestionado por <strong>fondos privados</strong>, donde tu pensión depende del capital acumulado y sus rendimientos.</p>
+        <!-- Comparación de regímenes -->
+        <div class="regimenes">
+            <div class="regimen">
+                <div class="regimen-header colpensiones">
+                    <h3>Colpensiones</h3>
+                    <p>Régimen de Prima Media</p>
+                </div>
+                <div class="regimen-body">
+                    <p><strong>Garantizada por el Estado</strong><br>
+                    Pensión definida según semanas y salario promedio de los últimos 10 años.</p>
+                </div>
+            </div>
+
+            <div class="regimen">
+                <div class="regimen-header privado">
+                    <h3>Fondos Privados</h3>
+                    <p>Régimen de Ahorro Individual</p>
+                </div>
+                <div class="regimen-body">
+                    <p><strong>Tu dinero crece con rendimientos</strong><br>
+                    La pensión depende del capital acumulado + retiro programado o renta vitalicia.</p>
+                </div>
+            </div>
         </div>
 
-        <!-- Botón grande que lleva al formulario real -->
-        <div class="cta">
-            <h2>Calcula tu Pensión</h2>
-            <p>Descubre cuánto recibirás al jubilarte según el régimen que elijas.</p>
-            <button type="button" onclick="window.location.href='formulario'">
-                Iniciar Cálculo
+        <!-- Llamado a la acción -->
+        <div class="cta-section">
+            <h2>¿Cuánto vas a recibir de pensión?</h2>
+            <p>Haz el cálculo completo y descubre cuál régimen te conviene más</p>
+            <button class="btn-cta" onclick="window.location.href='/formulario'">
+                Iniciar Cálculo Gratis
             </button>
         </div>
+
     </div>
+
+    <footer>
+        <p>&copy; 2025 Calculadora de Pensión Colombia • Herramienta educativa • Los resultados son estimativos</p>
+    </footer>
+
 </body>
 </html>
