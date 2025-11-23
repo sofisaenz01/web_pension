@@ -8,22 +8,19 @@ def principal():
 
 @app.route('/formulario')
 def formulario():
-    return render_template('formulario.html')
+    return render_template('formulario.html', resultado=None, fondo=None)
 
 @app.route('/procesar', methods=['POST'])
 def procesar():
     nombre = request.form.get('nombre')
     apellidos = request.form.get('apellidos')
     salario = float(request.form.get('salario'))
-    fondo = request.form.get('fondo')
+    fondo = request.form.get('fondo')        # Esta línea ya la tenías
     semanas = int(request.form.get('semanas'))
     edad = int(request.form.get('edad'))
-
-    # mejora proyecto ARL
     arl = float(request.form.get('arl'))
     aporte_arl = salario * arl
 
-    
     if fondo == "colpensiones":
         pension = salario * 0.65
         resultado = (
@@ -39,7 +36,8 @@ def procesar():
             f"${pension:,.0f}. Aporte mensual ARL: ${aporte_arl:,.0f}."
         )
 
-    return render_template("formulario.html", resultado=resultado)
+    # Aquí pasamos ambas variables
+    return render_template("formulario.html", resultado=resultado, fondo=fondo)
 
 if __name__ == '__main__':
     app.run(debug=True)
